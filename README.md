@@ -41,6 +41,13 @@ Historical simulation (JSONL input → summary JSON + CSV report):
 npm run simulate:historical -- --input ./samples/historical-sample.jsonl --out ./logs/simulations
 ```
 
+Benchmark (throughput + p50/p95/p99 + engine runtime):
+```bash
+npm run benchmark
+```
+- Output: `docs/benchmarks/*.json`, `docs/benchmarks/*.md`
+- Latest summary: `docs/benchmarks/LATEST.md`
+
 ### Optional env
 - `REDIS_URL=redis://localhost:6379`
 - `REDIS_KEY_PREFIX=gatex`
@@ -55,6 +62,7 @@ npm run simulate:historical -- --input ./samples/historical-sample.jsonl --out .
 
 ### Evaluate
 `POST /api/gate/evaluate`
+- Response includes `runtime.processing_ms` (GateX engine execution time)
 
 ### Policy versions
 `GET /api/policy/versions`

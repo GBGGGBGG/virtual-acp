@@ -24,4 +24,6 @@ test('evaluateRequest returns signed response', async () => {
   const out = await evaluateRequest(payload(), null);
   assert.equal(typeof out.signature, 'string');
   assert.ok(out.signature.length >= 32);
+  assert.equal(typeof out.runtime.processing_ms, 'number');
+  assert.ok(out.runtime.processing_ms >= 0);
 });

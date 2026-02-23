@@ -6,6 +6,7 @@ const { signPayload } = require('./signing');
 const { logEvent } = require('./logger');
 
 async function evaluateRequest(input, store) {
+  const startedAt = process.hrtime.bigint();
   const parsed = RequestSchema.safeParse(input || {});
   if (!parsed.success) {
     const err = new Error('DENY_SCHEMA');
@@ -45,6 +46,8 @@ async function evaluateRequest(input, store) {
     0.3 * (1 - excessiveDenyPenalty) +
     0.3 * riskComplianceScore;
 
+  const processing_ms = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
+
   const response = {
     request_id: req.request_id,
     policy: req.policy,
@@ -62,6 +65,10 @@ async function evaluateRequest(input, store) {
     },
     params_version: state.versions[0]?.ts,
     tuning,
+    runtime: {
+      processing_ms: Number(processing_ms.toFixed(3)),
+      model: 'deterministic-rules+adaptive-tuning',
+    },
   };
 
   response.signature = signPayload({
@@ -81,6 +88,7 @@ async function evaluateRequest(input, store) {
     warns: response.warns,
     verification_score: response.verification.verification_score,
     params_version: response.params_version,
+    processing_ms: response.runtime.processing_ms,
   });
   return response;
 }
