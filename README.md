@@ -51,6 +51,12 @@ Server: `http://localhost:8787`
 ### Attribution report
 `GET /api/report/attribution`
 
+### Stability trend
+`GET /api/report/stability?minutes=120`
+
+### Policy simulate (dry-run)
+`POST /api/policy/simulate` with `{ samples: [...] }`
+
 Minimal payload:
 ```json
 {
