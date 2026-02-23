@@ -140,6 +140,7 @@ Minimal payload:
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 - Benchmark methodology: `docs/benchmark-methodology.md`
 - Deployment benchmark runbook: `docs/deployment-benchmark-runbook.md`
+- Deployment benchmark copy-paste: `docs/deployment-benchmark-copy-paste.md`
 - Public one-pager: `docs/public-onepager.md`
 - Public post templates (X/Notion/Discord): `docs/public-posts.md`
 - Quickstart (5-min): `docs/quickstart.md`
