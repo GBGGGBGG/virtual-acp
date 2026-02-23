@@ -127,9 +127,12 @@ Minimal payload:
 - OpenAPI spec: `docs/openapi.yaml`
 - Deployment checklist: `docs/deploy-checklist.md`
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
+- Benchmark methodology: `docs/benchmark-methodology.md`
+- 30-minute integration guide: `docs/integration-30min-guide.md`
+- SDK-style examples: `examples/client-js-axios.js`(Node fetch 기반), `examples/client-python-requests.py`
 
 ## Next implementation steps
 1. Virtual ACP registration + production deployment wiring
-2. Policy simulation against real historical sample sets
-3. Production auth hardening (token rotation, scoped internal route protection)
-4. Endpoint-level scope split (internal-only webhook/sign vs external verify)
+2. Production benchmark in deployment-like infra (container + reverse proxy + network path)
+3. Publish external case study (before/after deny/failure/loss indicators)
+4. Add framework-specific adapters (LangChain/AutoGen-like connector templates)
