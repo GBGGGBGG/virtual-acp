@@ -19,6 +19,13 @@ npm run dev
 
 Server: `http://localhost:8787`
 
+## Docker run
+```bash
+npm run docker:up
+# stop
+npm run docker:down
+```
+
 Preflight check:
 ```bash
 npm run preflight
@@ -85,8 +92,13 @@ Minimal payload:
 }
 ```
 
+## Deployment prep assets
+- OpenAPI spec: `docs/openapi.yaml`
+- Deployment checklist: `docs/deploy-checklist.md`
+- Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
+
 ## Next implementation steps
-1. Redis-backed version history stream
-2. Signed webhook callback support
+1. Admin auth on policy/webhook sensitive endpoints
+2. Redis-backed version history stream
 3. Virtual ACP registration + production deployment wiring
-4. Policy simulation endpoint (dry-run against historical samples)
+4. Policy simulation against real historical sample sets

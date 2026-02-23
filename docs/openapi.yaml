@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: GateX ACP API
+  version: 0.1.0
+servers:
+  - url: http://localhost:8787
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+
+  /api/gate/evaluate:
+    post:
+      summary: Deterministic gate evaluation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200': { description: Evaluation response }
+
+  /api/acp/execute:
+    post:
+      summary: ACP adapter endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200': { description: ACP response }
+
+  /api/policy/versions:
+    get:
+      summary: List policy versions
+      responses:
+        '200': { description: Version list }
+
+  /api/policy/diff:
+    get:
+      summary: Diff two policy versions
+      parameters:
+        - in: query
+          name: from
+          schema: { type: string }
+        - in: query
+          name: to
+          schema: { type: string }
+      responses:
+        '200': { description: Diff response }
+
+  /api/policy/rollback:
+    post:
+      summary: Rollback policy by ts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ts: { type: string }
+      responses:
+        '200': { description: Rollback response }
+
+  /api/policy/rollback/{ts}:
+    post:
+      summary: Rollback policy by path ts
+      parameters:
+        - in: path
+          name: ts
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Rollback response }
+
+  /api/policy/simulate:
+    post:
+      summary: Dry-run simulation over samples array
+      responses:
+        '200': { description: Simulation summary }
+
+  /api/policy/simulate/batch-file:
+    post:
+      summary: Dry-run simulation from JSONL file
+      responses:
+        '200': { description: Batch simulation summary }
+
+  /api/policy/simulate/preset:
+    post:
+      summary: Compare strict/lenient/insurance preset modes
+      responses:
+        '200': { description: Preset simulation result }
+
+  /api/report/attribution:
+    get:
+      summary: Attribution report
+      responses:
+        '200': { description: Report }
+
+  /api/report/stability:
+    get:
+      summary: Stability trend series
+      responses:
+        '200': { description: Stability report }
+
+  /api/report/export:
+    get:
+      summary: Export report as json/csv
+      parameters:
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum: [json, csv]
+      responses:
+        '200': { description: Export payload }
+
+  /api/webhook/sign:
+    post:
+      summary: Sign payload for webhook verification
+      responses:
+        '200': { description: Signature response }

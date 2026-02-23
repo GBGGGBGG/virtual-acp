@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  gatex:
+    build: .
+    container_name: gatex-acp
+    ports:
+      - "8787:8787"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - REDIS_KEY_PREFIX=gatex
+      - REDIS_STATE_TTL_SEC=86400
+      - GATEX_SIGNING_SECRET=change-me
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: gatex-redis
+    ports:
+      - "6379:6379"
