@@ -19,6 +19,11 @@ npm run dev
 
 Server: `http://localhost:8787`
 
+Preflight check:
+```bash
+npm run preflight
+```
+
 ### Optional env
 - `REDIS_URL=redis://localhost:6379`
 - `REDIS_KEY_PREFIX=gatex`
@@ -57,11 +62,17 @@ Server: `http://localhost:8787`
 ### Policy simulate (dry-run)
 `POST /api/policy/simulate` with `{ samples: [...] }`
 
+### Policy simulate batch file (JSONL)
+`POST /api/policy/simulate/batch-file` with `{ filePath: "./samples.jsonl" }`
+
 ### Policy simulate preset compare
 `POST /api/policy/simulate/preset` with `{ sample: {...} }` (strict/lenient/insurance)
 
 ### Webhook signature helper
 `POST /api/webhook/sign` (returns HMAC signature)
+
+### Report export
+`GET /api/report/export?format=json|csv`
 
 Minimal payload:
 ```json
