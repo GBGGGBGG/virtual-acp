@@ -60,6 +60,11 @@ Benchmark an already-running server (external mode):
 BENCH_SPAWN=false BENCH_BASE_URL=http://127.0.0.1:8787 npm run benchmark
 ```
 
+Generate synthetic case study artifact:
+```bash
+npm run case-study:synthetic -- --input ./samples/historical-sample.jsonl --out ./docs/case-studies
+```
+
 ### Optional env
 - `REDIS_URL=redis://localhost:6379`
 - `REDIS_KEY_PREFIX=gatex`
@@ -134,12 +139,14 @@ Minimal payload:
 - Deployment checklist: `docs/deploy-checklist.md`
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 - Benchmark methodology: `docs/benchmark-methodology.md`
+- Deployment benchmark runbook: `docs/deployment-benchmark-runbook.md`
 - Public one-pager: `docs/public-onepager.md`
 - Public post templates (X/Notion/Discord): `docs/public-posts.md`
 - Quickstart (5-min): `docs/quickstart.md`
 - 30-minute integration guide: `docs/integration-30min-guide.md`
 - Troubleshooting: `docs/troubleshooting.md`
 - SDK-style examples: `examples/client-js-axios.js`(Node fetch 기반), `examples/client-python-requests.py`
+- Case studies: `docs/case-studies/`
 
 ## Next implementation steps
 1. Virtual ACP registration + production deployment wiring

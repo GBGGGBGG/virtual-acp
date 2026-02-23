@@ -1,0 +1,38 @@
+{
+  "summary": {
+    "dataset": "/Users/jhyou/work/projects/virtual-acp/samples/historical-sample.jsonl",
+    "total": 3,
+    "baseline": {
+      "allow": 3,
+      "deny": 0
+    },
+    "gatex": {
+      "allow": 2,
+      "deny": 1,
+      "allow_rate": 0.6667
+    },
+    "proxy_impact": {
+      "denied_risk_exposure": 160.2,
+      "denied_fee_usd": 1.1,
+      "interpretation": "proxy only; not realized PnL"
+    },
+    "generated_at": "2026-02-23T12:58:54.646Z"
+  },
+  "rows": [
+    {
+      "request_id": "h1",
+      "decision": "ALLOW",
+      "fails": ""
+    },
+    {
+      "request_id": "h2",
+      "decision": "DENY",
+      "fails": "DENY_RISK"
+    },
+    {
+      "request_id": "h3",
+      "decision": "ALLOW",
+      "fails": ""
+    }
+  ]
+}
