@@ -24,6 +24,7 @@ Server: `http://localhost:8787`
 - `REDIS_KEY_PREFIX=gatex`
 - `REDIS_STATE_TTL_SEC=86400`
 - `GATEX_SIGNING_SECRET=change-me`
+- `GATEX_LOG_DIR=./logs`
 
 ## API
 ### Health
@@ -41,6 +42,15 @@ Server: `http://localhost:8787`
 ### ACP adapter
 `POST /api/acp/execute` (maps ACP payload to GateX evaluator)
 
+### Policy diff
+`GET /api/policy/diff?from=<ts>&to=<ts>`
+
+### Policy rollback (path)
+`POST /api/policy/rollback/:ts`
+
+### Attribution report
+`GET /api/report/attribution`
+
 Minimal payload:
 ```json
 {
@@ -53,7 +63,7 @@ Minimal payload:
 ```
 
 ## Next implementation steps
-1. Redis state persistence
-2. Policy storage + rollback endpoint
-3. ACP adapter layer for Virtual protocol registration
-4. Signed verification metadata
+1. Redis-backed version history stream
+2. Signed webhook callback support
+3. Virtual ACP registration + production deployment wiring
+4. Policy simulation endpoint (dry-run against historical samples)

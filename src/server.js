@@ -2,6 +2,7 @@ const express = require('express');
 const healthRoute = require('./routes/health');
 const evalRoute = require('./routes/evaluate');
 const policyRoute = require('./routes/policy');
+const reportRoute = require('./routes/report');
 const acpRoute = require('./routes/acp');
 const { createStore } = require('./services/store');
 const { hydrateState } = require('./core/state');
@@ -20,6 +21,7 @@ async function boot() {
   app.use('/api', healthRoute);
   app.use('/api', evalRoute);
   app.use('/api', policyRoute);
+  app.use('/api', reportRoute);
   app.use('/api', acpRoute);
 
   const PORT = process.env.PORT || 8787;

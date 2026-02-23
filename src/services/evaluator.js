@@ -3,6 +3,7 @@ const { evaluateGates } = require('../gates/evaluate');
 const { state, pushMetric, windowMetrics, snapshotState } = require('../core/state');
 const { tuneIfNeeded } = require('./tuner');
 const { signPayload } = require('./signing');
+const { logEvent } = require('./logger');
 
 async function evaluateRequest(input, store) {
   const parsed = RequestSchema.safeParse(input || {});
@@ -71,6 +72,15 @@ async function evaluateRequest(input, store) {
   });
 
   await store?.save(snapshotState()).catch(() => {});
+  logEvent({
+    kind: 'gate.evaluate',
+    request_id: response.request_id,
+    decision: response.decision,
+    fails: response.fails,
+    warns: response.warns,
+    verification_score: response.verification.verification_score,
+    params_version: response.params_version,
+  });
   return response;
 }
 
