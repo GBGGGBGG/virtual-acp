@@ -31,6 +31,16 @@ Preflight check:
 npm run preflight
 ```
 
+Full smoke check (spins up server, checks auth boundaries + core routes):
+```bash
+npm run smoke
+```
+
+Historical simulation (JSONL input → summary JSON + CSV report):
+```bash
+npm run simulate:historical -- --input ./samples/historical-sample.jsonl --out ./logs/simulations
+```
+
 ### Optional env
 - `REDIS_URL=redis://localhost:6379`
 - `REDIS_KEY_PREFIX=gatex`
@@ -79,8 +89,8 @@ npm run preflight
 ### Policy simulate preset compare
 `POST /api/policy/simulate/preset` with `{ sample: {...} }` (strict/lenient/insurance)
 
-### Webhook signature helper
-`POST /api/webhook/sign` (returns HMAC signature)
+### Webhook signature helper (internal/admin)
+`POST /api/webhook/sign` (returns HMAC signature, admin token required)
 
 ### Webhook signature verify
 `POST /api/webhook/verify` with `{ payload, signature }`

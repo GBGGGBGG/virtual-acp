@@ -3,6 +3,7 @@
 ## 0) Local readiness
 - [ ] `npm test` passes
 - [ ] `npm run preflight` passes (health + eval + latency)
+- [ ] `npm run smoke` passes (auth boundary + webhook sign/verify)
 - [ ] `.env` set with non-default `GATEX_SIGNING_SECRET`
 - [ ] Redis connectivity verified
 

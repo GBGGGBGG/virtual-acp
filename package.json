@@ -9,6 +9,8 @@
     "dev": "node --watch src/server.js",
     "test": "node --test",
     "preflight": "node scripts/preflight.js",
+    "smoke": "node scripts/smoke.js",
+    "simulate:historical": "node scripts/simulate-historical.js",
     "bundle": "bash scripts/build-deployment-bundle.sh",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down"
