@@ -1,6 +1,6 @@
 {
   "summary": {
-    "dataset": "/Users/jhyou/work/projects/virtual-acp/samples/historical-sample.jsonl",
+    "dataset": "samples/historical-sample.jsonl",
     "total": 3,
     "baseline": {
       "allow": 3,

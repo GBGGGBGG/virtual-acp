@@ -18,7 +18,8 @@ Adaptive Deterministic Risk Operating System for Virtual ACP.
 
 ## Run
 ```bash
-cd /Users/jhyou/work/projects/virtual-acp
+git clone https://github.com/GBGGGBGG/virtual-acp.git
+cd virtual-acp
 npm install
 npm run dev
 ```

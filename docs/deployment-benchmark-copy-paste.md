@@ -3,14 +3,15 @@
 Run these commands on a machine with Docker installed.
 
 ```bash
-cd /Users/jhyou/work/projects/virtual-acp
+git clone https://github.com/GBGGGBGG/virtual-acp.git
+cd virtual-acp
 bash scripts/run-deployment-benchmark.sh
 ```
 
 If you prefer manual commands:
 
 ```bash
-cd /Users/jhyou/work/projects/virtual-acp
+cd virtual-acp
 
 docker compose up -d --build
 curl -s http://127.0.0.1:8787/api/health

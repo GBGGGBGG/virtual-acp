@@ -2,7 +2,8 @@
 
 ## 0) Start
 ```bash
-cd /Users/jhyou/work/projects/virtual-acp
+git clone https://github.com/GBGGGBGG/virtual-acp.git
+cd virtual-acp
 npm install
 npm run dev
 ```

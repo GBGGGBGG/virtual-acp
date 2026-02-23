@@ -5,7 +5,8 @@ Integrate GateX as a deterministic risk gate in under 30 minutes.
 
 ## 1) Start GateX (5 min)
 ```bash
-cd /Users/jhyou/work/projects/virtual-acp
+git clone https://github.com/GBGGGBGG/virtual-acp.git
+cd virtual-acp
 npm install
 npm run dev
 ```
