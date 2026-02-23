@@ -9,6 +9,7 @@
     "dev": "node --watch src/server.js",
     "test": "node --test",
     "preflight": "node scripts/preflight.js",
+    "bundle": "bash scripts/build-deployment-bundle.sh",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down"
   },
