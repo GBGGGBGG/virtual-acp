@@ -1,6 +1,7 @@
 const Redis = require('ioredis');
+const { ENV } = require('../config/env');
 
-const KEY = 'gatex:state:v1';
+const KEY = `${ENV.REDIS_KEY_PREFIX}:state:v1`;
 
 function safeParse(json, fallback) {
   try {
@@ -11,7 +12,7 @@ function safeParse(json, fallback) {
 }
 
 function createStore() {
-  const redisUrl = process.env.REDIS_URL;
+  const redisUrl = ENV.REDIS_URL;
 
   if (!redisUrl) {
     return {
@@ -43,7 +44,12 @@ function createStore() {
     },
     async save(state) {
       await client.connect().catch(() => {});
-      await client.set(KEY, JSON.stringify(state));
+      const payload = JSON.stringify(state);
+      if (ENV.REDIS_STATE_TTL_SEC > 0) {
+        await client.set(KEY, payload, 'EX', ENV.REDIS_STATE_TTL_SEC);
+      } else {
+        await client.set(KEY, payload);
+      }
     },
     async health() {
       try {

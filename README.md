@@ -19,6 +19,12 @@ npm run dev
 
 Server: `http://localhost:8787`
 
+### Optional env
+- `REDIS_URL=redis://localhost:6379`
+- `REDIS_KEY_PREFIX=gatex`
+- `REDIS_STATE_TTL_SEC=86400`
+- `GATEX_SIGNING_SECRET=change-me`
+
 ## API
 ### Health
 `GET /api/health`
@@ -31,6 +37,9 @@ Server: `http://localhost:8787`
 
 ### Policy rollback
 `POST /api/policy/rollback` with `{ "ts": "<version-ts>" }`
+
+### ACP adapter
+`POST /api/acp/execute` (maps ACP payload to GateX evaluator)
 
 Minimal payload:
 ```json
