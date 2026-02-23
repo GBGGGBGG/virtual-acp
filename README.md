@@ -128,6 +128,7 @@ Minimal payload:
 - Deployment checklist: `docs/deploy-checklist.md`
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 - Benchmark methodology: `docs/benchmark-methodology.md`
+- Public one-pager: `docs/public-onepager.md`
 - 30-minute integration guide: `docs/integration-30min-guide.md`
 - SDK-style examples: `examples/client-js-axios.js`(Node fetch 기반), `examples/client-python-requests.py`
 
