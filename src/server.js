@@ -26,6 +26,9 @@ async function boot() {
   if (saved) hydrateState(saved);
 
   app.use(express.json({ limit: '1mb' }));
+  app.use('/docs', express.static('docs'));
+  app.get('/openapi.yaml', (_req, res) => res.sendFile('openapi.yaml', { root: 'docs' }));
+
   app.use('/api', healthRoute);
   app.use('/api', evalRoute);
   app.use('/api', webhookRoute);
