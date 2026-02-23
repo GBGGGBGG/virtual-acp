@@ -2,6 +2,12 @@
 
 Adaptive Deterministic Risk Operating System for Virtual ACP.
 
+## Start here
+- 5-minute quickstart: `docs/quickstart.md`
+- 30-minute integration guide: `docs/integration-30min-guide.md`
+- Troubleshooting: `docs/troubleshooting.md`
+- Public one-pager: `docs/public-onepager.md`
+
 ## What it does
 - Deterministic allow/deny gates (schema/cooldown/budget/risk/slippage/fee/failure density)
 - Rolling metrics window
@@ -129,7 +135,10 @@ Minimal payload:
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 - Benchmark methodology: `docs/benchmark-methodology.md`
 - Public one-pager: `docs/public-onepager.md`
+- Public post templates (X/Notion/Discord): `docs/public-posts.md`
+- Quickstart (5-min): `docs/quickstart.md`
 - 30-minute integration guide: `docs/integration-30min-guide.md`
+- Troubleshooting: `docs/troubleshooting.md`
 - SDK-style examples: `examples/client-js-axios.js`(Node fetch 기반), `examples/client-python-requests.py`
 
 ## Next implementation steps
