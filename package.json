@@ -12,6 +12,7 @@
     "smoke": "node scripts/smoke.js",
     "simulate:historical": "node scripts/simulate-historical.js",
     "benchmark": "node scripts/benchmark.js",
+    "benchmark:summary": "node scripts/benchmark-aggregate.js --mode external --limit 3",
     "case-study:synthetic": "node scripts/case-study-synthetic.js",
     "bundle": "bash scripts/build-deployment-bundle.sh",
     "docker:up": "docker compose up --build",

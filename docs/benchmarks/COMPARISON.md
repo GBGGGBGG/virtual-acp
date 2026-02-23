@@ -28,6 +28,17 @@ Date: 2026-02-23
 - Engine runtime is sub-millisecond and stable.
 - These results are **single-host local benchmarks**, not internet-facing production measurements.
 
+## 3-Run External Summary (new)
+- Summary file: `benchmark-summary-external-2026-02-23T13-01-20-007Z.md`
+- Runs: 3 (external mode)
+- Latency median/min/max:
+  - p50: 2 / 2 / 2 ms
+  - p95: 4 / 3 / 4 ms
+  - p99: 5 / 4 / 6 ms
+- Engine runtime median/min/max:
+  - p50: 0.014459 / 0.014 / 0.016625 ms
+  - p95: 0.019167 / 0.017875 / 0.029917 ms
+
 ## Important Limitation (for public claims)
 - Docker-based measurement could not be run on this host because `docker` is not installed in current environment.
 - Before public release, add one benchmark from deployment-like infra (container + reverse proxy + network path).

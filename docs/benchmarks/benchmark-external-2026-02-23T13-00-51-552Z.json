@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-02-23T13:00:51.552Z",
+  "mode": "external",
+  "env": {
+    "node": "v22.22.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "benchmark": {
+    "total": 1000,
+    "ok": 1000,
+    "fail": 0,
+    "elapsedMs": 132,
+    "rps": 1000,
+    "latency": {
+      "p50": 2,
+      "p95": 4,
+      "p99": 6,
+      "max": 25
+    },
+    "engine_runtime_ms": {
+      "p50": 0.016625,
+      "p95": 0.029917,
+      "p99": 0.03825,
+      "max": 0.281292
+    }
+  },
+  "target": {
+    "endpoint": "http://127.0.0.1:8787/api/gate/evaluate",
+    "total_requests": 1000,
+    "concurrency": 20
+  }
+}

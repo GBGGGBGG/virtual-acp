@@ -27,9 +27,10 @@ Generated: 2026-02-23T12:51:27.656Z
 - max: **0.291042 ms**
 
 ## Artifact Files
-- `docs/benchmarks/benchmark-external-2026-02-23T12-51-27-656Z.json`
-- `docs/benchmarks/benchmark-external-2026-02-23T12-51-27-656Z.md`
+- `docs/benchmarks/benchmark-external-2026-02-23T13-00-52-050Z.json`
+- `docs/benchmarks/benchmark-external-2026-02-23T13-00-52-050Z.md`
 - Comparison: `docs/benchmarks/COMPARISON.md`
+- 3-run summary (median/min/max): `docs/benchmarks/benchmark-summary-external-2026-02-23T13-01-20-007Z.md`
 
 ## Notes
 - This benchmark is local-loopback synthetic load for regression tracking.

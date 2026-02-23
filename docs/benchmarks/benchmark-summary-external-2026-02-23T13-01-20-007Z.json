@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-02-23T13:01:20.007Z",
+  "mode": "external",
+  "files": [
+    "benchmark-external-2026-02-23T13-00-51-552Z.json",
+    "benchmark-external-2026-02-23T13-00-51-804Z.json",
+    "benchmark-external-2026-02-23T13-00-52-050Z.json"
+  ],
+  "runs": 3,
+  "success_rate": {
+    "median": 1
+  },
+  "latency_ms": {
+    "p50": {
+      "median": 2,
+      "min": 2,
+      "max": 2
+    },
+    "p95": {
+      "median": 4,
+      "min": 3,
+      "max": 4
+    },
+    "p99": {
+      "median": 5,
+      "min": 4,
+      "max": 6
+    },
+    "max": {
+      "median": 5,
+      "min": 5,
+      "max": 25
+    }
+  },
+  "engine_runtime_ms": {
+    "p50": {
+      "median": 0.014459,
+      "min": 0.014,
+      "max": 0.016625
+    },
+    "p95": {
+      "median": 0.019167,
+      "min": 0.017875,
+      "max": 0.029917
+    },
+    "p99": {
+      "median": 0.025666,
+      "min": 0.023,
+      "max": 0.03825
+    },
+    "max": {
+      "median": 0.082334,
+      "min": 0.038167,
+      "max": 0.281292
+    }
+  }
+}
