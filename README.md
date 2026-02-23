@@ -152,7 +152,7 @@ Minimal payload:
 - Case studies: `docs/case-studies/`
 
 ## Next implementation steps
-1. Virtual ACP registration + production deployment wiring
+1. Replace temporary ACP/X references with permanent production profile links and monitor first 7-day usage metrics
 2. Production benchmark in deployment-like infra (container + reverse proxy + network path)
 3. Publish external case study (before/after deny/failure/loss indicators)
 4. Add framework-specific adapters (LangChain/AutoGen-like connector templates)
