@@ -37,7 +37,7 @@ npm run preflight
 - `REDIS_STATE_TTL_SEC=86400`
 - `GATEX_SIGNING_SECRET=change-me`
 - `GATEX_LOG_DIR=./logs`
-- `GATEX_ADMIN_TOKEN=change-admin-token` (protects policy/report endpoints)
+- `GATEX_ADMIN_TOKEN=change-admin-token` (protects policy/report/simulate/export endpoints via `x-gatex-admin-token` or `Authorization: Bearer <token>`)
 
 ## API
 ### Health
@@ -102,7 +102,7 @@ Minimal payload:
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 
 ## Next implementation steps
-1. Admin auth on policy/webhook sensitive endpoints
-2. Redis-backed version history stream
-3. Virtual ACP registration + production deployment wiring
-4. Policy simulation against real historical sample sets
+1. Redis-backed version history stream
+2. Virtual ACP registration + production deployment wiring
+3. Policy simulation against real historical sample sets
+4. Production auth hardening (token rotation, scoped internal route protection)
