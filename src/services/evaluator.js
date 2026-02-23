@@ -66,7 +66,7 @@ async function evaluateRequest(input, store) {
     params_version: state.versions[0]?.ts,
     tuning,
     runtime: {
-      processing_ms: Number(processing_ms.toFixed(3)),
+      processing_ms: Number(processing_ms.toFixed(6)),
       model: 'deterministic-rules+adaptive-tuning',
     },
   };

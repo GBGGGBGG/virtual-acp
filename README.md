@@ -47,6 +47,12 @@ npm run benchmark
 ```
 - Output: `docs/benchmarks/*.json`, `docs/benchmarks/*.md`
 - Latest summary: `docs/benchmarks/LATEST.md`
+- Comparison summary: `docs/benchmarks/COMPARISON.md`
+
+Benchmark an already-running server (external mode):
+```bash
+BENCH_SPAWN=false BENCH_BASE_URL=http://127.0.0.1:8787 npm run benchmark
+```
 
 ### Optional env
 - `REDIS_URL=redis://localhost:6379`

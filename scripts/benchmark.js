@@ -5,7 +5,8 @@ const http = require('http');
 const { spawn } = require('child_process');
 
 const PORT = Number(process.env.BENCH_PORT || 8790);
-const BASE = `http://127.0.0.1:${PORT}`;
+const BASE = process.env.BENCH_BASE_URL || `http://127.0.0.1:${PORT}`;
+const SHOULD_SPAWN = process.env.BENCH_SPAWN !== 'false';
 
 function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
@@ -13,10 +14,11 @@ function reqEvaluate(payload) {
   return new Promise((resolve, reject) => {
     const t0 = Date.now();
     const data = JSON.stringify(payload);
+    const u = new URL('/api/gate/evaluate', BASE);
     const r = http.request({
-      hostname: '127.0.0.1',
-      port: PORT,
-      path: '/api/gate/evaluate',
+      hostname: u.hostname,
+      port: Number(u.port || (u.protocol === 'https:' ? 443 : 80)),
+      path: u.pathname,
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -43,7 +45,8 @@ async function waitUntilUp(timeoutMs = 10000) {
   while (Date.now() - t0 < timeoutMs) {
     try {
       const ok = await new Promise((resolve) => {
-        const r = http.request({ hostname: '127.0.0.1', port: PORT, path: '/api/health', method: 'GET' }, (res) => {
+        const u = new URL('/api/health', BASE);
+        const r = http.request({ hostname: u.hostname, port: Number(u.port || (u.protocol === 'https:' ? 443 : 80)), path: u.pathname, method: 'GET' }, (res) => {
           resolve(res.statusCode === 200);
         });
         r.on('error', () => resolve(false));
@@ -136,21 +139,22 @@ async function runPhase({ total, concurrency, warmup }) {
 }
 
 (async () => {
-  const child = spawn('node', ['src/server.js'], {
-    cwd: process.cwd(),
-    stdio: ['ignore', 'pipe', 'pipe'],
-    env: {
-      ...process.env,
-      PORT: String(PORT),
-      GATEX_ADMIN_TOKEN: process.env.GATEX_ADMIN_TOKEN || 'benchmark-admin-token',
-    },
-  });
+  const child = SHOULD_SPAWN
+    ? spawn('node', ['src/server.js'], {
+      cwd: process.cwd(),
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        PORT: String(PORT),
+        GATEX_ADMIN_TOKEN: process.env.GATEX_ADMIN_TOKEN || 'benchmark-admin-token',
+      },
+    })
+    : null;
 
   try {
     const up = await waitUntilUp(10000);
     if (!up) throw new Error('benchmark server start timeout');
 
-    // Warmup
     for (let i = 0; i < 50; i += 1) {
       await reqEvaluate(basePayload(i));
     }
@@ -161,11 +165,13 @@ async function runPhase({ total, concurrency, warmup }) {
     const outDir = path.resolve('./docs/benchmarks');
     fs.mkdirSync(outDir, { recursive: true });
 
-    const jsonPath = path.join(outDir, `benchmark-${stamp}.json`);
-    const mdPath = path.join(outDir, `benchmark-${stamp}.md`);
+    const mode = SHOULD_SPAWN ? 'spawned-local' : 'external';
+    const jsonPath = path.join(outDir, `benchmark-${mode}-${stamp}.json`);
+    const mdPath = path.join(outDir, `benchmark-${mode}-${stamp}.md`);
 
     const report = {
       generated_at: now.toISOString(),
+      mode,
       env: {
         node: process.version,
         platform: process.platform,
@@ -182,6 +188,7 @@ async function runPhase({ total, concurrency, warmup }) {
     fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2));
 
     const md = `# GateX Benchmark (${report.generated_at})\n\n` +
+      `- Mode: ${mode}\n` +
       `- Endpoint: ${report.target.endpoint}\n` +
       `- Requests: ${report.target.total_requests}\n` +
       `- Concurrency: ${report.target.concurrency}\n\n` +
@@ -203,12 +210,12 @@ async function runPhase({ total, concurrency, warmup }) {
 
     fs.writeFileSync(mdPath, md);
 
-    console.log(JSON.stringify({ ok: true, jsonPath, mdPath, summary: phase }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode, jsonPath, mdPath, summary: phase }, null, 2));
     process.exit(0);
   } catch (e) {
     console.error(e);
     process.exit(1);
   } finally {
-    try { child.kill('SIGTERM'); } catch {}
+    try { child?.kill('SIGTERM'); } catch {}
   }
 })();
