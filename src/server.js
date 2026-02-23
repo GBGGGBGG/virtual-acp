@@ -8,8 +8,10 @@ const simulateRoute = require('./routes/simulate');
 const simulateBatchRoute = require('./routes/simulate-batch');
 const presetRoute = require('./routes/preset');
 const webhookRoute = require('./routes/webhook');
+const webhookVerifyRoute = require('./routes/webhook-verify');
 const exportRoute = require('./routes/export');
 const acpRoute = require('./routes/acp');
+const { adminAuth } = require('./middleware/adminAuth');
 const { createStore } = require('./services/store');
 const { hydrateState } = require('./core/state');
 const { evaluateRequest } = require('./services/evaluator');
@@ -26,15 +28,18 @@ async function boot() {
   app.use(express.json({ limit: '1mb' }));
   app.use('/api', healthRoute);
   app.use('/api', evalRoute);
-  app.use('/api', policyRoute);
-  app.use('/api', reportRoute);
-  app.use('/api', stabilityRoute);
-  app.use('/api', simulateRoute);
-  app.use('/api', simulateBatchRoute);
-  app.use('/api', presetRoute);
   app.use('/api', webhookRoute);
-  app.use('/api', exportRoute);
+  app.use('/api', webhookVerifyRoute);
   app.use('/api', acpRoute);
+
+  // admin-protected endpoints (token optional in dev)
+  app.use('/api', adminAuth, policyRoute);
+  app.use('/api', adminAuth, simulateRoute);
+  app.use('/api', adminAuth, simulateBatchRoute);
+  app.use('/api', adminAuth, presetRoute);
+  app.use('/api', adminAuth, reportRoute);
+  app.use('/api', adminAuth, stabilityRoute);
+  app.use('/api', adminAuth, exportRoute);
 
   const PORT = process.env.PORT || 8787;
   app.listen(PORT, () => {

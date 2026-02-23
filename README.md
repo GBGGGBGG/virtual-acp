@@ -37,6 +37,7 @@ npm run preflight
 - `REDIS_STATE_TTL_SEC=86400`
 - `GATEX_SIGNING_SECRET=change-me`
 - `GATEX_LOG_DIR=./logs`
+- `GATEX_ADMIN_TOKEN=change-admin-token` (protects policy/report endpoints)
 
 ## API
 ### Health
@@ -77,6 +78,9 @@ npm run preflight
 
 ### Webhook signature helper
 `POST /api/webhook/sign` (returns HMAC signature)
+
+### Webhook signature verify
+`POST /api/webhook/verify` with `{ payload, signature }`
 
 ### Report export
 `GET /api/report/export?format=json|csv`
