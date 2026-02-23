@@ -49,6 +49,9 @@ npm run preflight
 ### Policy versions
 `GET /api/policy/versions`
 
+### Policy version history (store-backed)
+`GET /api/policy/versions/history?limit=20`
+
 ### Policy rollback
 `POST /api/policy/rollback` with `{ "ts": "<version-ts>" }`
 
@@ -102,7 +105,7 @@ Minimal payload:
 - Virtual ACP manifest draft: `docs/virtual-acp-manifest-draft.md`
 
 ## Next implementation steps
-1. Redis-backed version history stream
-2. Virtual ACP registration + production deployment wiring
-3. Policy simulation against real historical sample sets
-4. Production auth hardening (token rotation, scoped internal route protection)
+1. Virtual ACP registration + production deployment wiring
+2. Policy simulation against real historical sample sets
+3. Production auth hardening (token rotation, scoped internal route protection)
+4. Endpoint-level scope split (internal-only webhook/sign vs external verify)

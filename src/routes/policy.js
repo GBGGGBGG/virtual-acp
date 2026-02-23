@@ -8,6 +8,15 @@ router.get('/policy/versions', (_req, res) => {
   res.json({ versions: state.versions });
 });
 
+router.get('/policy/versions/history', async (req, res) => {
+  const limit = Number(req.query.limit || 20);
+  const history = await req.app.locals.store?.getVersionHistory?.(limit).catch(() => null);
+  if (!history || history.length === 0) {
+    return res.json({ versions: state.versions.slice(0, Math.max(1, Math.min(limit || 20, 200))), source: 'state' });
+  }
+  return res.json({ versions: history, source: 'store' });
+});
+
 router.get('/policy/diff', (req, res) => {
   const { from, to } = req.query;
   const fromV = state.versions.find((v) => v.ts === from) || state.versions[state.versions.length - 1];
@@ -27,6 +36,7 @@ async function doRollback(ts, app) {
   state.versions = state.versions.slice(0, 10);
 
   await app.locals.store?.save(snapshotState()).catch(() => {});
+  await app.locals.store?.pushVersion?.(state.versions[0]).catch(() => {});
   return { status: 200, body: { ok: true, params: state.params, rolledBackTo: ts } };
 }
 

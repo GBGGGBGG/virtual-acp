@@ -72,6 +72,7 @@ async function evaluateRequest(input, store) {
   });
 
   await store?.save(snapshotState()).catch(() => {});
+  await store?.pushVersion?.(state.versions[0]).catch(() => {});
   logEvent({
     kind: 'gate.evaluate',
     request_id: response.request_id,
