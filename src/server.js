@@ -5,6 +5,8 @@ const policyRoute = require('./routes/policy');
 const reportRoute = require('./routes/report');
 const stabilityRoute = require('./routes/stability');
 const simulateRoute = require('./routes/simulate');
+const presetRoute = require('./routes/preset');
+const webhookRoute = require('./routes/webhook');
 const acpRoute = require('./routes/acp');
 const { createStore } = require('./services/store');
 const { hydrateState } = require('./core/state');
@@ -26,6 +28,8 @@ async function boot() {
   app.use('/api', reportRoute);
   app.use('/api', stabilityRoute);
   app.use('/api', simulateRoute);
+  app.use('/api', presetRoute);
+  app.use('/api', webhookRoute);
   app.use('/api', acpRoute);
 
   const PORT = process.env.PORT || 8787;

@@ -57,6 +57,12 @@ Server: `http://localhost:8787`
 ### Policy simulate (dry-run)
 `POST /api/policy/simulate` with `{ samples: [...] }`
 
+### Policy simulate preset compare
+`POST /api/policy/simulate/preset` with `{ sample: {...} }` (strict/lenient/insurance)
+
+### Webhook signature helper
+`POST /api/webhook/sign` (returns HMAC signature)
+
 Minimal payload:
 ```json
 {
