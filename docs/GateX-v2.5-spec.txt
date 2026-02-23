@@ -1,0 +1,357 @@
+=====================================================================
+GateX v2.5
+Adaptive Deterministic Risk Operating System
+Full Technical Specification & Execution Blueprint
+=====================================================================
+
+Author: GateX
+Version: 2.5
+Philosophy: Deterministic Core + Adaptive Parameter Optimization
+Positioning: AI Risk Operating System Layer
+=====================================================================
+
+
+
+#####################################################################
+0. DESIGN PHILOSOPHY
+#####################################################################
+
+GateX is NOT:
+- A black-box ML model
+- A probabilistic guess engine
+- A trading strategy
+- A replacement for analysis engines
+
+GateX IS:
+- A deterministic execution gate
+- A capital preservation layer
+- A dynamic risk parameter tuner
+- A failure suppression infrastructure
+- A system stability amplifier
+
+Core rule:
+All final decisions MUST be explainable and reproducible.
+
+Adaptive logic may adjust thresholds,
+but must never introduce randomness.
+
+
+
+#####################################################################
+1. SYSTEM LAYERS
+#####################################################################
+
+Layer 1: Deterministic Rule Gates
+Layer 2: Rolling Metrics Collector
+Layer 3: Adaptive Parameter Tuner
+Layer 4: Performance Attribution Engine
+Layer 5: Verification & Reputation Layer
+Layer 6: Policy Versioning & Safety Guard
+
+Execution Flow:
+
+Request
+  ↓
+Schema Validation
+  ↓
+Static Gate Execution
+  ↓
+Rolling Metrics Update
+  ↓
+Adaptive Tuning Trigger
+  ↓
+Decision Aggregation
+  ↓
+Performance Attribution
+  ↓
+Response + Verification Metadata
+
+
+
+#####################################################################
+2. INPUT CONTRACT (STRICT)
+#####################################################################
+
+Request Object:
+
+{
+  request_id: string (required),
+  policy: string (required),
+  mode: strict|lenient,
+  insurance_mode: boolean,
+  context: object,
+  signals: object (required),
+  requested_gates: array,
+  overrides: object
+}
+
+Hard Requirements:
+- request_id required
+- policy required
+- signals required
+- No null returns allowed
+- Any schema violation -> DENY_SCHEMA
+
+
+
+#####################################################################
+3. SIGNAL TAXONOMY (FULL SPEC)
+#####################################################################
+
+signals.risk.score (0.0 - 1.0)
+signals.risk.confidence (0.0 - 1.0)
+
+signals.market.volatility (0.0 - 1.0 normalized)
+signals.market.slippage_bps (integer)
+
+signals.cost.fee_usd
+signals.cost.expected_value_usd
+signals.cost.this_cost_usd
+
+signals.account.balance_usd
+signals.account.position_size_usd
+
+signals.activity.recent_failures
+signals.activity.recent_actions_5m
+signals.activity.failure_rate_20
+
+signals.budget.today_spend_usd
+signals.budget.daily_budget_usd
+signals.budget.hard_cap_usd
+
+signals.counterparty.agent_reputation
+signals.counterparty.recent_success_rate
+signals.counterparty.recent_failure_rate
+signals.counterparty.reviews_count
+signals.counterparty.last_seen_days
+signals.counterparty.price_usd
+
+
+
+#####################################################################
+4. DETERMINISTIC GATE PACK
+#####################################################################
+
+4.1 Schema Gate
+- Reject if mandatory fields missing
+- Reject if numeric types invalid
+
+4.2 Cooldown Gate
+IF recent_failures >= threshold
+  -> FAIL (DENY_COOLDOWN)
+
+4.3 Budget Gate
+IF today_spend + this_cost > daily_budget
+  -> FAIL (unless urgency high in lenient mode)
+
+4.4 Risk Gate
+IF risk.score >= risk_deny
+  -> FAIL
+ELSE IF risk.score >= risk_warn
+  -> WARN
+
+4.5 Slippage Gate
+IF slippage_bps >= slippage_deny_bps
+  -> FAIL
+
+4.6 Fee Ratio Gate
+fee_ratio = fee_usd / expected_value_usd
+IF fee_ratio >= fee_ratio_deny
+  -> FAIL
+
+4.7 Failure Density Gate
+IF rolling_failure_rate >= failure_density_deny
+  -> FAIL
+
+4.8 Overtrade Gate
+IF recent_actions_5m > overtrade_threshold
+  -> WARN or FAIL
+
+4.9 Max Size Gate
+max_size_ratio adjusted downward based on:
+- risk.score
+- volatility
+- rolling_failure_rate
+
+4.10 Execute Gate (Final AND)
+IF any FAIL
+  -> DENY
+ELSE ALLOW (possibly with clamp)
+
+
+
+#####################################################################
+5. ROLLING METRICS ENGINE
+#####################################################################
+
+Maintain rolling window (N = 200 default)
+
+Tracked fields:
+
+total_requests
+allow_count
+deny_count
+rolling_failure_rate
+rolling_deny_rate
+avg_risk_score
+avg_slippage_bps
+avg_fee_ratio
+cooldown_trigger_count
+prevented_trades_count
+estimated_fee_saved
+estimated_loss_prevented
+
+Update rule:
+Exponential moving average OR fixed window sliding.
+
+
+
+#####################################################################
+6. ADAPTIVE TUNING ENGINE
+#####################################################################
+
+Tuning Frequency:
+Every K requests (default: 25)
+
+Adaptive Targets:
+- rolling_failure_rate target: <= 8%
+- rolling_deny_rate target: <= 80%
+
+6.1 Conservative Shift Trigger
+IF rolling_failure_rate > 12%
+  risk_deny -= 0.02
+  slippage_deny_bps -= 10
+  max_size_base *= 0.9
+  cooldown_base_sec *= 1.2
+
+6.2 Relaxation Trigger
+IF rolling_deny_rate > 85%
+AND rolling_failure_rate < 6%
+  risk_deny += 0.01
+  max_size_base *= 1.1
+  cooldown_base_sec *= 0.9
+
+6.3 Volatility Amplification
+IF avg_volatility > 0.7
+  slippage_deny_bps *= 0.85
+  max_size_base *= 0.8
+
+6.4 Capital Stress Detection
+IF position_size_usd / balance_usd > 0.6
+  max_size_ratio *= 0.7
+
+6.5 Insurance Mode Escalation
+IF insurance_mode == true
+  multiply all clamps by safety_factor (e.g., 0.8)
+
+
+
+#####################################################################
+7. PERFORMANCE ATTRIBUTION ENGINE
+#####################################################################
+
+Estimate impact of GateX decisions:
+
+If trade blocked:
+  prevented_trades_count++
+
+Estimate avoided loss:
+  estimated_loss_prevented += (risk.score * position_size_usd)
+
+Estimate fee savings:
+  estimated_fee_saved += fee_usd
+
+Generate periodic report:
+
+{
+  loss_reduction_percent,
+  overtrade_reduction_percent,
+  fee_saved_total,
+  risk_exposure_reduction_percent
+}
+
+
+
+#####################################################################
+8. VERIFICATION LAYER
+#####################################################################
+
+Compute verification_score:
+
+verification_score =
+  0.4*(1 - rolling_failure_rate)
+  + 0.3*(1 - excessive_deny_penalty)
+  + 0.3*(risk_compliance_score)
+
+If verification_score >= threshold
+  gate_verified = true
+
+Expose:
+- stability_score
+- capital_protection_score
+- adaptive_strength_score
+
+
+
+#####################################################################
+9. POLICY VERSIONING
+#####################################################################
+
+Every tuning cycle:
+- Save params_version
+- Log deltas
+- Keep last 10 versions
+- Allow rollback
+
+Never allow uncontrolled parameter drift.
+
+
+
+#####################################################################
+10. SAFETY RULES
+#####################################################################
+
+- No random decisions.
+- No ML model directly deciding allow/deny.
+- Adaptive only adjusts thresholds.
+- All parameters bounded.
+- Max daily adjustment limited.
+- Always return structured response.
+
+
+
+#####################################################################
+11. PERFORMANCE REQUIREMENTS
+#####################################################################
+
+P95 latency < 1000ms
+All decisions logged
+Redis state persistence required
+Health endpoint required
+Deterministic behavior guaranteed
+
+
+
+#####################################################################
+12. MARKET POSITIONING
+#####################################################################
+
+GateX is:
+
+Adaptive Risk OS
+AI Capital Preservation Layer
+Deterministic Execution Gate
+Failure Suppression Engine
+Self-Tuning Risk Infrastructure
+
+Not just rules.
+Not just filters.
+Not just safety.
+
+GateX is the decision spine of autonomous agents.
+
+
+
+=====================================================================
+END OF SPEC
+=====================================================================
