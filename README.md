@@ -151,8 +151,8 @@ Minimal payload:
 - SDK-style examples: `examples/client-js-axios.js`(Node fetch 기반), `examples/client-python-requests.py`
 - Case studies: `docs/case-studies/`
 
-## Next implementation steps
-1. Replace temporary ACP/X references with permanent production profile links and monitor first 7-day usage metrics
-2. Production benchmark in deployment-like infra (container + reverse proxy + network path)
-3. Publish external case study (before/after deny/failure/loss indicators)
-4. Add framework-specific adapters (LangChain/AutoGen-like connector templates)
+## Operational checklist
+- [ ] Keep ACP and X profile links updated to permanent production URLs
+- [ ] Monitor first 7-day usage metrics (requests, deny rate, failures, repeat wallets)
+- [ ] Run deployment-like benchmark regularly and publish updated summary artifacts
+- [ ] Publish case-study updates with objective before/after indicators
